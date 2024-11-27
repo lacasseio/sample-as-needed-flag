@@ -1,0 +1,12 @@
+plugins {
+    id 'java-gradle-plugin'
+}
+
+gradlePlugin {
+    plugins {
+        asNeededFlag {
+            id = 'nokee-samples.as-needed-link-options'
+            implementationClass = 'nokeesamples.AsNeededLinkOptions$Rule'
+        }
+    }
+}

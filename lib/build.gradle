@@ -1,0 +1,9 @@
+plugins {
+    id 'cpp-library'
+}
+
+
+tasks.withType(AbstractLinkTask.class).configureEach {
+    linkerArgs.add('-ldl')
+    linkerArgs.add('--verbose')
+}

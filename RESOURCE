@@ -1,0 +1,2 @@
+https://bnikolic.co.uk/blog/gnu-ld-as-needed.html
+https://gcc.gnu.org/pipermail/gcc-help/2010-December/096753.html

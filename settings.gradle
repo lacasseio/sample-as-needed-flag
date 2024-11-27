@@ -1,0 +1,7 @@
+pluginManagement {
+    includeBuild 'as-needed-flag-plugin'
+}
+
+rootProject.name = 'sample-as-needed-flag'
+include 'app'
+include 'lib'
