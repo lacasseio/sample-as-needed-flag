@@ -1,6 +1,7 @@
 plugins {
     id 'cpp-application'
     id 'cpp-unit-test'
+    id 'nokee-samples.as-needed-link-options'
 }
 
 application {
@@ -14,4 +15,5 @@ tasks.withType(AbstractLinkTask.class).configureEach {
     linkerArgs.add('-ldl')
 }
 
-tasks.withType(AbstractLinkTask.class).configureEach { linkerArgs.add('-Wl,--as-needed') }
+tasks.withType(AbstractLinkTask.class).configureEach { asNeeded.enable() }
+//tasks.withType(AbstractLinkTask.class).configureEach { linkerArgs.add('-Wl,--as-needed') }
