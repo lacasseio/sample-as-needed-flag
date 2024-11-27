@@ -1,8 +1,8 @@
 # Demonstrate how to add the --as-needed flag for all linked libraries
 
-Problem:
+## Problem
 The --as-needed flag is not used by default on GCC.
-HOWEVER, some distribution provide GCC with a different spec (ex: ubuntu, alpine, debian).
+HOWEVER, some distribution provide GCC with a different [spec](https://gcc.gnu.org/onlinedocs/gcc/Spec-Files.html) (ex: ubuntu, alpine, debian).
 To see the spec, use `g++ -dumpspecs` which will show under `link`.
 You can also compile a simple application using `g++ --verbose` which will show the full linker commandl line.
 
@@ -15,19 +15,41 @@ Aside from compiler explorer, we only found gcc:5.4 docker image to not provide 
 
 
 ```
-$ ./gradlew assemble
-$ readelf -d app/build/exe/main/debug/app | grep NEEDED
+$ docker run --rm -it -v $PWD:/workspace -w /workspace $(docker build -q .)
+# ./gradlew assemble
+# readelf -d app/build/exe/main/debug/app | grep NEEDED
  0x0000000000000001 (NEEDED)             Shared library: [liblib.so]
- 0x0000000000000001 (NEEDED)             Shared library: [libdl.so.2]
  0x0000000000000001 (NEEDED)             Shared library: [libstdc++.so.6]
  0x0000000000000001 (NEEDED)             Shared library: [libgcc_s.so.1]
  0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
- 0x0000000000000001 (NEEDED)             Shared library: [ld-linux-aarch64.so.1]
-$ apply-patch
-$ ./gradlew assemble
-$ readelf -d app/build/exe/main/debug/app | grep NEEDED
+# git apply use-plugin.patch
+# ./gradlew assemble
+# readelf -d app/build/exe/main/debug/app | grep NEEDED
  0x0000000000000001 (NEEDED)             Shared library: [libstdc++.so.6]
  0x0000000000000001 (NEEDED)             Shared library: [libgcc_s.so.1]
  0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
- 0x0000000000000001 (NEEDED)             Shared library: [ld-linux-aarch64.so.1]
+```
+
+
+Running vanilla GCC using compiler explorer:
+```
+$ docker run --rm -it --platform linux/amd64 ubuntu:latest
+# apt update && apt install -y make git curl python3 xz-utils
+# apt install gcc-multilib # musl-dev on alpine
+> 2 # America
+> 102 # Montreal
+# git clone https://github.com/compiler-explorer/infra.git && cd infra
+# make ce
+# ./bin/ce_install list # choose compiler
+# ./bin/ce_install install compilers/c++/x86/gcc 14.2.0
+
+# vim main.cpp
+# /opt/compiler-explorer/gcc-14.2.0/bin/gcc main.cpp -lm -lcrypt
+# readelf -d a.out | grep NEEDED
+ 0x0000000000000001 (NEEDED)             Shared library: [libm.so.6]
+ 0x0000000000000001 (NEEDED)             Shared library: [libcrypt.so.1]
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
+# /opt/compiler-explorer/gcc-14.2.0/bin/gcc main.cpp -Wl,--as-needed -lm -lcrypt
+# readelf -d a.out | grep NEEDED
+ 0x0000000000000001 (NEEDED)             Shared library: [libc.so.6]
 ```

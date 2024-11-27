@@ -1,2 +1,6 @@
 https://bnikolic.co.uk/blog/gnu-ld-as-needed.html
 https://gcc.gnu.org/pipermail/gcc-help/2010-December/096753.html
+https://askubuntu.com/questions/1077276/why-do-gccs-linker-options-as-per-dumpspec-contain-as-needed
+https://gcc.gnu.org/onlinedocs/gcc/Spec-Files.html
+https://wozniak.ca/blog/2024/01/02/1/
+https://wozniak.ca/blog/2024/01/09/1/
