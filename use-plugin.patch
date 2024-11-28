@@ -1,21 +1,12 @@
 diff --git a/app/build.gradle b/app/build.gradle
-index 3140ea1..83126d6 100644
+index 8c7031d..678bd4d 100644
 --- a/app/build.gradle
 +++ b/app/build.gradle
-@@ -1,6 +1,7 @@
- plugins {
-     id 'cpp-application'
-     id 'cpp-unit-test'
-+    id 'nokee-samples.as-needed-link-options'
+@@ -10,5 +10,5 @@ application {
+     }
  }
  
- application {
-@@ -14,4 +15,5 @@ tasks.withType(AbstractLinkTask.class).configureEach {
-     linkerArgs.add('-ldl')
- }
- 
+-//tasks.withType(AbstractLinkTask.class).configureEach { asNeeded.enable() }
 -tasks.withType(AbstractLinkTask.class).configureEach { linkerArgs.add('-Wl,--as-needed') }
-\ No newline at end of file
 +tasks.withType(AbstractLinkTask.class).configureEach { asNeeded.enable() }
 +//tasks.withType(AbstractLinkTask.class).configureEach { linkerArgs.add('-Wl,--as-needed') }
-\ No newline at end of file
