@@ -5,15 +5,10 @@ plugins {
 }
 
 application {
-    targetMachines.add(machines.linux.architecture("aarch64"))
     dependencies {
         implementation project(':lib')
     }
 }
 
-tasks.withType(AbstractLinkTask.class).configureEach {
-    linkerArgs.add('-ldl')
-}
-
-tasks.withType(AbstractLinkTask.class).configureEach { asNeeded.enable() }
-//tasks.withType(AbstractLinkTask.class).configureEach { linkerArgs.add('-Wl,--as-needed') }
+//tasks.withType(AbstractLinkTask.class).configureEach { asNeeded.enable() }
+tasks.withType(AbstractLinkTask.class).configureEach { linkerArgs.add('-Wl,--as-needed') }
