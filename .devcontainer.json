@@ -1,1 +1,1 @@
-{"image":"gradle:jdk11"}
+{"build": { "dockerfile": "Dockerfile" }}
